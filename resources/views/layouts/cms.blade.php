@@ -10,7 +10,7 @@
   <link rel="stylesheet" href="{{ asset('css/cms.css') }}">
 </head>
 <body>
-
+<div class="cms-sidebar-backdrop"></div>
 <div class="cms-wrapper">
   @include('layouts.sidebar')
 
@@ -69,6 +69,34 @@ document.querySelectorAll('.form-delete').forEach(form => {
 </script>
 
 @endif
+<script>
+  (() => {
+    const body = document.body;
+    const sidebar = document.querySelector('.cms-sidebar');
+    const openButton = document.querySelector('.cms-nav-toggle');
+    const closeButton = document.querySelector('.cms-sidebar-close');
+    const backdrop = document.querySelector('.cms-sidebar-backdrop');
+
+    if (!sidebar || !openButton || !closeButton || !backdrop) {
+      return;
+    }
+
+    const toggleSidebar = (isOpen) => {
+      body.classList.toggle('cms-nav-open', isOpen);
+      openButton.setAttribute('aria-expanded', String(isOpen));
+    };
+
+    openButton.addEventListener('click', () => toggleSidebar(true));
+    closeButton.addEventListener('click', () => toggleSidebar(false));
+    backdrop.addEventListener('click', () => toggleSidebar(false));
+
+    window.addEventListener('resize', () => {
+      if (window.innerWidth > 900) {
+        toggleSidebar(false);
+      }
+    });
+  })();
+</script>
 
 </body>
 </html>

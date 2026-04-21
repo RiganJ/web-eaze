@@ -20,8 +20,20 @@
       </a>
     </div>
 
+    <button
+      class="nav-toggle"
+      type="button"
+      aria-label="Buka menu navigasi"
+      aria-expanded="false"
+      aria-controls="site-navigation"
+    >
+      <span></span>
+      <span></span>
+      <span></span>
+    </button>
+
     <!-- MENU + CTA FLEX -->
-    <div class="nav-right">
+    <div class="nav-right" id="site-navigation">
       <ul class="nav-links">
             <li>
       <a href="{{ url('/') }}">
@@ -82,6 +94,37 @@
 
   </div>
 </footer>
+<script>
+  (() => {
+    const navToggle = document.querySelector('.nav-toggle');
+    const navPanel = document.querySelector('.nav-right');
+
+    if (!navToggle || !navPanel) {
+      return;
+    }
+
+    const syncNavState = (isOpen) => {
+      navPanel.classList.toggle('is-open', isOpen);
+      navToggle.classList.toggle('is-open', isOpen);
+      navToggle.setAttribute('aria-expanded', String(isOpen));
+      document.body.classList.toggle('nav-open', isOpen);
+    };
+
+    navToggle.addEventListener('click', () => {
+      syncNavState(!navPanel.classList.contains('is-open'));
+    });
+
+    navPanel.querySelectorAll('a').forEach((link) => {
+      link.addEventListener('click', () => syncNavState(false));
+    });
+
+    window.addEventListener('resize', () => {
+      if (window.innerWidth > 900) {
+        syncNavState(false);
+      }
+    });
+  })();
+</script>
 @stack('scripts')
 </body>
 </html>

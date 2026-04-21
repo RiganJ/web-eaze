@@ -1,6 +1,12 @@
 <aside class="cms-sidebar">
-  <div class="logo">
-    <i class="fa-solid fa-broom-ball"></i>
+  <div class="cms-sidebar-head">
+    <div class="logo">
+      <i class="fa-solid fa-broom-ball"></i>
+    </div>
+
+    <button class="cms-sidebar-close" type="button" aria-label="Tutup sidebar admin">
+      <i class="fa-solid fa-xmark"></i>
+    </button>
   </div>
 
   <nav class="sidebar-nav">
@@ -23,9 +29,9 @@
         <i class="fa-solid fa-spinner"></i>
       </a>
 
-<form method="POST" action="{{ route('logout') }}" class="logout-form" id="logoutForm">
+<form method="POST" action="{{ route('logout') }}" class="logout-form">
     @csrf
-    <button type="button" id="logoutButton" title="Logout">
+    <button type="button" class="logout-button" title="Logout">
         <i class="fa-solid fa-right-from-bracket"></i> Logout
     </button>
 </form>
@@ -44,9 +50,9 @@
         <i class="fa-solid fa-spinner"></i>
       </a>
 
-<form method="POST" action="{{ route('logout') }}" class="logout-form" id="logoutForm">
+<form method="POST" action="{{ route('logout') }}" class="logout-form">
     @csrf
-    <button type="button" id="logoutButton" title="Logout">
+    <button type="button" class="logout-button" title="Logout">
         <i class="fa-solid fa-right-from-bracket"></i> Logout
     </button>
 </form>
@@ -65,9 +71,9 @@
         <i class="fa-solid fa-spinner"></i>
       </a>
 
-<form method="POST" action="{{ route('logout') }}" class="logout-form" id="logoutForm">
+<form method="POST" action="{{ route('logout') }}" class="logout-form">
     @csrf
-    <button type="button" id="logoutButton" title="Logout">
+    <button type="button" class="logout-button" title="Logout">
         <i class="fa-solid fa-right-from-bracket"></i> Logout
     </button>
 </form>
@@ -86,9 +92,9 @@
         <i class="fa-solid fa-spinner"></i>
       </a>
 
-<form method="POST" action="{{ route('logout') }}" class="logout-form" id="logoutForm">
+<form method="POST" action="{{ route('logout') }}" class="logout-form">
     @csrf
-    <button type="button" id="logoutButton" title="Logout">
+    <button type="button" class="logout-button" title="Logout">
         <i class="fa-solid fa-right-from-bracket"></i> Logout
     </button>
 </form>
@@ -106,9 +112,9 @@
     <i class="fa-solid fa-spinner"></i>
   </a>
 
-<form method="POST" action="{{ route('logout') }}" class="logout-form" id="logoutForm">
+<form method="POST" action="{{ route('logout') }}" class="logout-form">
     @csrf
-    <button type="button" id="logoutButton" title="Logout">
+    <button type="button" class="logout-button" title="Logout">
         <i class="fa-solid fa-right-from-bracket"></i> Logout
     </button>
 </form>
@@ -129,8 +135,8 @@
 
   <form method="POST" action="{{ route('logout') }}" class="logout-form">
     @csrf
-    <button type="submit" title="Logout">
-      <i class="fa-solid fa-right-from-bracket"></i>
+    <button type="button" class="logout-button" title="Logout">
+      <i class="fa-solid fa-right-from-bracket"></i> Logout
     </button>
   </form>
 
@@ -149,8 +155,8 @@
 
   <form method="POST" action="{{ route('logout') }}" class="logout-form">
     @csrf
-    <button type="submit" title="Logout">
-      <i class="fa-solid fa-right-from-bracket"></i>
+    <button type="button" class="logout-button" title="Logout">
+      <i class="fa-solid fa-right-from-bracket"></i> Logout
     </button>
   </form>
 
@@ -202,10 +208,10 @@
       </a>
 
 
-<form method="POST" action="{{ route('logout') }}" class="logout-form" id="logoutForm">
+<form method="POST" action="{{ route('logout') }}" class="logout-form">
     @csrf
-    <button type="button" id="logoutButton" title="Logout">
-        <i class="fa-solid fa-right-from-bracket"></i> 
+    <button type="button" class="logout-button" title="Logout">
+        <i class="fa-solid fa-right-from-bracket"></i> Logout
     </button>
 </form>
     @endif
@@ -215,24 +221,26 @@
 <script src="https://cdn.jsdelivr.net/npm/sweetalert2@11"></script>
 
 <script>
-    document.getElementById('logoutButton').addEventListener('click', function (e) {
-        e.preventDefault(); // Mencegah form submit otomatis
+    document.querySelectorAll('.logout-button').forEach((button) => {
+        button.addEventListener('click', function (e) {
+            e.preventDefault();
 
-        // Menampilkan SweetAlert konfirmasi
-        Swal.fire({
-            title: 'Apakah Anda yakin ingin keluar?',
-            text: "Anda akan diarahkan ke halaman login!",
-            icon: 'warning',
-            showCancelButton: true,
-            confirmButtonColor: '#3085d6',
-            cancelButtonColor: '#d33',
-            confirmButtonText: 'Ya, keluar!',
-            cancelButtonText: 'Batal'
-        }).then((result) => {
-            if (result.isConfirmed) {
-                // Jika konfirmasi diterima, form logout akan disubmit
-                document.getElementById('logoutForm').submit();
-            }
+            const form = button.closest('form');
+
+            Swal.fire({
+                title: 'Apakah Anda yakin ingin keluar?',
+                text: "Anda akan diarahkan ke halaman login!",
+                icon: 'warning',
+                showCancelButton: true,
+                confirmButtonColor: '#3085d6',
+                cancelButtonColor: '#d33',
+                confirmButtonText: 'Ya, keluar!',
+                cancelButtonText: 'Batal'
+            }).then((result) => {
+                if (result.isConfirmed && form) {
+                    form.submit();
+                }
+            });
         });
     });
 </script>
